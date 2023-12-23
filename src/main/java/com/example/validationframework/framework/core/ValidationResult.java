@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class ValidationResult {
-    private final Set<ConstraintViolation> violations;
+    private Set<ConstraintViolation> violations;
     public ValidationResult() {
         violations = new HashSet<ConstraintViolation>();
     }

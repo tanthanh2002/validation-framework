@@ -20,7 +20,7 @@ public abstract class Validator {
     }
 
     private ConstraintViolation createConstraintViolation(String property, Object value){
-        ConstraintViolation constraint = new ConstraintViolationImpl();
+        ConstraintViolation constraint = new FieldConstraintViolation();
 
         constraint.setProperty(property);
         constraint.setValue(value);

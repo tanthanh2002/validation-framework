@@ -1,16 +1,16 @@
 package com.example.validationframework.framework.core;
 
-public class ConstraintViolationImpl implements ConstraintViolation{
+public class FieldConstraintViolation implements ConstraintViolation{
     private String message;
     private Object value;
     private String property;
     private boolean valid = true;
 
-    public ConstraintViolationImpl() {
+    public FieldConstraintViolation() {
 
     }
 
-    public ConstraintViolationImpl(String message, Object value, String property, boolean valid) {
+    public FieldConstraintViolation(String message, Object value, String property, boolean valid) {
         this.message = message;
         this.value = value;
         this.property = property;
