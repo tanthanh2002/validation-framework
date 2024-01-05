@@ -49,7 +49,7 @@ public class FieldConstraintViolation implements ConstraintViolation{
 
     @Override
     public boolean isValid() {
-        return !valid;
+        return valid;
     }
 
     @Override

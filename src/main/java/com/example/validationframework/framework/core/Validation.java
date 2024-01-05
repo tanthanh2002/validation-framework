@@ -18,7 +18,7 @@ public class Validation {
         ValidationResult validationResult = new ValidationResult();
 
         Class<?> clazz = object.getClass();
-        Field[] fields = clazz.getFields();
+        Field[] fields = clazz.getDeclaredFields();
 
         for(Field field : fields) {
             field.setAccessible(true);
