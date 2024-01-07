@@ -22,9 +22,9 @@ public class ValidatorFactory {
                     validator = new RegexValidator();
                     break;
 
-//                case PHONE_NUMBER:
-//                    validator = new PhoneNumberValidator();
-//                    break;
+                case PHONE_NUMBER:
+                    validator = new PhoneNumberValidator();
+                    break;
 
                 case MAX:
                     validator = new MaxValidator();
@@ -33,10 +33,6 @@ public class ValidatorFactory {
                 case MIN:
                     validator = new MinValidator();
                     break;
-
-//                case DATE_OF_BIRTH:
-//                    validator = new DoBValidator();
-//                    break;
 
                 case NOT_BLANK:
                     validator = new NotBlankValidator();
