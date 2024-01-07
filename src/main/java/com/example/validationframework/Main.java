@@ -54,18 +54,10 @@ public class Main extends Application {
         customInputBuilder.setInput("Enter your name");
         CustomInput emailInput = customInputBuilder.getCustomInput();
 
-        Label labelPhoneNumber = new Label();
-        labelPhoneNumber.setFont(Font.font("Verdana", FontWeight.NORMAL, 12));
-        labelPhoneNumber.setTextFill(Color.RED);
-
-        Label labelPhoneNumber2 = new Label();
-        labelPhoneNumber2.setFont(Font.font("Verdana", FontWeight.NORMAL, 12));
-        labelPhoneNumber2.setTextFill(Color.RED);
-
-        TextField fieldPhoneNumber = new TextField();
-        fieldPhoneNumber.setPromptText("Enter your number phone");
-        fieldPhoneNumber.setPrefSize(400,30);
-        fieldPhoneNumber.setFont(Font.font("Verdana", FontWeight.NORMAL, 20));
+        customInputBuilder.setPrefixLabel(null);
+        customInputBuilder.setPostfixLabel(null);
+        customInputBuilder.setInput("Enter your name");
+        CustomInput fieldPhoneNumber = customInputBuilder.getCustomInput();
 
         Label labelPassword = new Label();
         labelPassword.setFont(Font.font("Verdana", FontWeight.NORMAL, 12));
@@ -96,24 +88,24 @@ public class Main extends Application {
 
         emailInput.getLabelPrefix().setVisible(isPrefixError.getValue());
         labelPassword.setVisible(isPrefixError.getValue());
-        labelPhoneNumber.setVisible(isPrefixError.getValue());
+        fieldPhoneNumber.getLabelPrefix().setVisible(isPrefixError.getValue());
         labelDoB.setVisible(isPrefixError.getValue());
 
         emailInput.getLabelPostfix().setVisible(!isPrefixError.getValue());
         labelPassword2.setVisible(!isPrefixError.getValue());
-        labelPhoneNumber2.setVisible(!isPrefixError.getValue());
+        fieldPhoneNumber.getLabelPostfix().setVisible(!isPrefixError.getValue());
         labelDoB2.setVisible(!isPrefixError.getValue());
         CheckBox prefixCb = new CheckBox("Use prefix");
         prefixCb.setSelected(true);
         prefixCb.selectedProperty().addListener((observable, oldValue, newValue) -> {
             emailInput.getLabelPrefix().setVisible(newValue);
             labelPassword.setVisible(newValue);
-            labelPhoneNumber.setVisible(newValue);
+            fieldPhoneNumber.getLabelPrefix().setVisible(newValue);
             labelDoB.setVisible(newValue);
 
             emailInput.getLabelPostfix().setVisible(!newValue);
             labelPassword2.setVisible(!newValue);
-            labelPhoneNumber2.setVisible(!newValue);
+            fieldPhoneNumber.getLabelPostfix().setVisible(!newValue);
             labelDoB2.setVisible(!newValue);
         });
 
@@ -178,12 +170,12 @@ public class Main extends Application {
             }
 
             emailInput.getLabelPrefix().setText(notifyEmail);
-            labelPhoneNumber.setText(notifyPhone);
+            fieldPhoneNumber.getLabelPrefix().setText(notifyPhone);
             labelPassword.setText(notifyPassword);
             labelDoB.setText(notifyDateOfBirth);
 
             emailInput.getLabelPostfix().setText(notifyEmail);
-            labelPhoneNumber2.setText(notifyPhone);
+            fieldPhoneNumber.getLabelPostfix().setText(notifyPhone);
             labelPassword2.setText(notifyPassword);
             labelDoB2.setText(notifyDateOfBirth);
 
@@ -206,9 +198,9 @@ public class Main extends Application {
         gridPane.add(emailInput.getLabelPrefix(), 0, 1);
         gridPane.add(emailInput, 0, 2);
         gridPane.add(emailInput.getLabelPostfix(), 0, 3);
-        gridPane.add(labelPhoneNumber, 0, 4);
+        gridPane.add(fieldPhoneNumber.getLabelPrefix(), 0, 4);
         gridPane.add(fieldPhoneNumber, 0, 5);
-        gridPane.add(labelPhoneNumber2, 0, 6);
+        gridPane.add(fieldPhoneNumber.getLabelPostfix(), 0, 6);
         gridPane.add(labelPassword,0, 7);
         gridPane.add(fieldPassword, 0, 8);
         gridPane.add(labelPassword2,0, 9);
