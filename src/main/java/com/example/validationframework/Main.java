@@ -3,6 +3,8 @@ package com.example.validationframework;
 import com.example.validationframework.framework.core.ConstraintViolation;
 import com.example.validationframework.framework.core.Validation;
 import com.example.validationframework.model.User;
+import com.example.validationframework.view.CustomInput;
+import com.example.validationframework.view.CustomInputBuilder;
 import eu.hansolo.tilesfx.events.TileEvent;
 import javafx.application.Application;
 import javafx.beans.property.BooleanProperty;
@@ -37,6 +39,8 @@ public class Main extends Application {
         Scene scene = new Scene(gridPane);
         stage.setScene(scene);
 
+        CustomInputBuilder customInputBuilder = new CustomInputBuilder();
+
         gridPane.setPadding(new Insets(10,10,10,10));
         gridPane.setHgap(1);
         gridPane.setVgap(10);
@@ -45,18 +49,10 @@ public class Main extends Application {
         title.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
         title.setTextFill(Color.BLUE);
 
-        Label labelEmail = new Label();
-        labelEmail.setFont(Font.font("Verdana", FontWeight.NORMAL, 12));
-        labelEmail.setTextFill(Color.RED);
-
-        Label labelEmail2 = new Label();
-        labelEmail2.setFont(Font.font("Verdana", FontWeight.NORMAL, 12));
-        labelEmail2.setTextFill(Color.RED);
-
-        TextField fieldEmail = new TextField();
-        fieldEmail.setPromptText("Enter your name");
-        fieldEmail.setPrefSize(400,30);
-        fieldEmail.setFont(Font.font("Verdana", FontWeight.NORMAL, 20));
+        customInputBuilder.setPrefixLabel(null);
+        customInputBuilder.setPostfixLabel(null);
+        customInputBuilder.setInput("Enter your name");
+        CustomInput emailInput = customInputBuilder.getCustomInput();
 
         Label labelPhoneNumber = new Label();
         labelPhoneNumber.setFont(Font.font("Verdana", FontWeight.NORMAL, 12));
@@ -98,24 +94,24 @@ public class Main extends Application {
         String pattern = "dd/MM/yyyy";
         datePicker.setPromptText(pattern);
 
-        labelEmail.setVisible(isPrefixError.getValue());
+        emailInput.getLabelPrefix().setVisible(isPrefixError.getValue());
         labelPassword.setVisible(isPrefixError.getValue());
         labelPhoneNumber.setVisible(isPrefixError.getValue());
         labelDoB.setVisible(isPrefixError.getValue());
 
-        labelEmail2.setVisible(!isPrefixError.getValue());
+        emailInput.getLabelPostfix().setVisible(!isPrefixError.getValue());
         labelPassword2.setVisible(!isPrefixError.getValue());
         labelPhoneNumber2.setVisible(!isPrefixError.getValue());
         labelDoB2.setVisible(!isPrefixError.getValue());
         CheckBox prefixCb = new CheckBox("Use prefix");
         prefixCb.setSelected(true);
         prefixCb.selectedProperty().addListener((observable, oldValue, newValue) -> {
-            labelEmail.setVisible(newValue);
+            emailInput.getLabelPrefix().setVisible(newValue);
             labelPassword.setVisible(newValue);
             labelPhoneNumber.setVisible(newValue);
             labelDoB.setVisible(newValue);
 
-            labelEmail2.setVisible(!newValue);
+            emailInput.getLabelPostfix().setVisible(!newValue);
             labelPassword2.setVisible(!newValue);
             labelPhoneNumber2.setVisible(!newValue);
             labelDoB2.setVisible(!newValue);
@@ -151,7 +147,7 @@ public class Main extends Application {
         Button signIn = new Button("Submit");
         signIn.setFont(Font.font("Verdana", FontWeight.NORMAL, 20));
         signIn.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
-            User user = new User(fieldEmail.getText(), fieldPhoneNumber.getText(), fieldPassword.getText(),
+            User user = new User(emailInput.getText(), fieldPhoneNumber.getText(), fieldPassword.getText(),
                     datePicker.getValue());
 
             Validation validation = Validation.getInstance();
@@ -181,12 +177,12 @@ public class Main extends Application {
                 System.out.println(violation.getProperty() + "->" + violation.getMessage());
             }
 
-            labelEmail.setText(notifyEmail);
+            emailInput.getLabelPrefix().setText(notifyEmail);
             labelPhoneNumber.setText(notifyPhone);
             labelPassword.setText(notifyPassword);
             labelDoB.setText(notifyDateOfBirth);
 
-            labelEmail2.setText(notifyEmail);
+            emailInput.getLabelPostfix().setText(notifyEmail);
             labelPhoneNumber2.setText(notifyPhone);
             labelPassword2.setText(notifyPassword);
             labelDoB2.setText(notifyDateOfBirth);
@@ -207,9 +203,9 @@ public class Main extends Application {
         });
 
         gridPane.add(title, 0, 0);
-        gridPane.add(labelEmail, 0, 1);
-        gridPane.add(fieldEmail, 0, 2);
-        gridPane.add(labelEmail2, 0, 3);
+        gridPane.add(emailInput.getLabelPrefix(), 0, 1);
+        gridPane.add(emailInput, 0, 2);
+        gridPane.add(emailInput.getLabelPostfix(), 0, 3);
         gridPane.add(labelPhoneNumber, 0, 4);
         gridPane.add(fieldPhoneNumber, 0, 5);
         gridPane.add(labelPhoneNumber2, 0, 6);
