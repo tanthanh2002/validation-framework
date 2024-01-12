@@ -7,6 +7,6 @@ import java.lang.annotation.Target;
 
 @Target({ElementType.TYPE, ElementType.FIELD, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface NotBlank {
-    String message() default  "Field can not blank";
+public @interface DateOfBirth {
+    String message() default "Field is invalid format";
 }

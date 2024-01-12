@@ -43,20 +43,19 @@ public class Main extends Application {
 
         gridPane.setPadding(new Insets(10,10,10,10));
         gridPane.setHgap(1);
-        gridPane.setVgap(10);
+        gridPane.setVgap(3);
 
-        Label title = new Label("Sign In");
-        title.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
-        title.setTextFill(Color.BLUE);
+        Label title = new Label("Sign Up");
+        title.setFont(Font.font("Verdana", FontWeight.BOLD, 25));
 
         customInputBuilder.setPrefixLabel(null);
         customInputBuilder.setPostfixLabel(null);
-        customInputBuilder.setInput("Enter your name");
+        customInputBuilder.setInput("Enter your email");
         CustomInput emailInput = customInputBuilder.getCustomInput();
 
         customInputBuilder.setPrefixLabel(null);
         customInputBuilder.setPostfixLabel(null);
-        customInputBuilder.setInput("Enter your name");
+        customInputBuilder.setInput("Enter your phone number");
         CustomInput fieldPhoneNumber = customInputBuilder.getCustomInput();
 
         Label labelPassword = new Label();
@@ -84,7 +83,7 @@ public class Main extends Application {
         datePicker.setPrefSize(400, 40);
         datePicker.setStyle("-fx-font-size: 20px;");
         String pattern = "dd/MM/yyyy";
-        datePicker.setPromptText(pattern);
+        datePicker.setPromptText("Enter your birthday (dd/mm/yyyy)");
 
         emailInput.getLabelPrefix().setVisible(isPrefixError.getValue());
         labelPassword.setVisible(isPrefixError.getValue());
@@ -144,7 +143,6 @@ public class Main extends Application {
 
             Validation validation = Validation.getInstance();
             Set<ConstraintViolation> violations = validation.validate(user).getViolations();
-
             String notifyEmail = "";
             String notifyPhone = "";
             String notifyPassword = "";
@@ -153,20 +151,18 @@ public class Main extends Application {
             for (ConstraintViolation violation : violations) {
                 switch (violation.getProperty()) {
                     case "email":
-                        notifyEmail += violation.getMessage() + ", ";
+                        notifyEmail += violation.getMessage() + "! ";
                         break;
                     case "phone":
-                        notifyPhone += violation.getMessage() + ", ";
+                        notifyPhone += violation.getMessage() + "! ";
                         break;
                     case "password":
-                        notifyPassword += violation.getMessage() + ", ";
+                        notifyPassword += violation.getMessage() + "! ";
                         break;
                     case "dob":
-                        notifyDateOfBirth += violation.getMessage() + ", ";
+                        notifyDateOfBirth += violation.getMessage() + "! ";
                         break;
                 }
-
-                System.out.println(violation.getProperty() + "->" + violation.getMessage());
             }
 
             emailInput.getLabelPrefix().setText(notifyEmail);
@@ -182,18 +178,19 @@ public class Main extends Application {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             if (Controller.checkSubmit(notifyEmail, notifyPhone, notifyPassword, notifyDateOfBirth)) {
                 alert.setTitle("Sign Up");
-                alert.setContentText("Submit form success!");
+                alert.setContentText("Sign up success!");
                 alert.showAndWait();
             } else {
                 if (isErrorModal.getValue()) {
                     alert.setTitle("Field Errors");
-                    alert.setContentText("label" + notifyEmail + "phone number" + notifyPhone +
-                            "password" + notifyPassword + "date of birth" + notifyDateOfBirth);
+                    alert.setContentText("Email: " + notifyEmail + "\nPhone Number: " + notifyPhone +
+                            "\nPassword: " + notifyPassword + "\nDate of Birth: " + notifyDateOfBirth);
                     alert.showAndWait();
                 }
             }
         });
 
+        GridPane.setHalignment(title, javafx.geometry.HPos.CENTER);
         gridPane.add(title, 0, 0);
         gridPane.add(emailInput.getLabelPrefix(), 0, 1);
         gridPane.add(emailInput, 0, 2);
@@ -207,9 +204,13 @@ public class Main extends Application {
         gridPane.add(labelDoB, 0, 10);
         gridPane.add(datePicker, 0, 11);
         gridPane.add(labelDoB2, 0, 12);
+        gridPane.setMargin(prefixCb, new Insets(10, 0, 0, 0));
         gridPane.add(prefixCb, 0, 13);
         gridPane.add(notificationErrorCb, 0, 14);
+        GridPane.setHalignment(signIn, javafx.geometry.HPos.CENTER);
         gridPane.add(signIn, 0, 15);
+
+        signIn.requestFocus();
         stage.show();
     }
 

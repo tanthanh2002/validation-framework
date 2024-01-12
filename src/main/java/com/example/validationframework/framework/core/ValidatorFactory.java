@@ -34,6 +34,10 @@ public class ValidatorFactory {
                     validator = new MinValidator();
                     break;
 
+                case DATE_OF_BIRTH:
+                    validator = new DoBValidator();
+                    break;
+
                 case NOT_BLANK:
                     validator = new NotBlankValidator();
                     break;

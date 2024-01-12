@@ -13,9 +13,10 @@ public class User {
     @PhoneNumber
     private String phone;
 
-    @Min(min = 6, message = "Password must be greater than 6")
+    @Min(min = 6, message = "Field must be greater than 6")
     private String password;
 
+    @DateOfBirth
     private LocalDate dob;
 
     public User(String email, String phone, String password, LocalDate dob) {
