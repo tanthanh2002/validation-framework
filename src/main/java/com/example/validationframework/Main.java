@@ -1,6 +1,7 @@
 package com.example.validationframework;
 
 import com.example.validationframework.framework.core.ConstraintViolation;
+import com.example.validationframework.framework.core.IIterator;
 import com.example.validationframework.framework.core.Validation;
 import com.example.validationframework.model.User;
 import com.example.validationframework.view.CustomInput;
@@ -23,7 +24,6 @@ import javafx.util.StringConverter;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Set;
 
 public class Main extends Application {
     private final BooleanProperty isPrefixError = new SimpleBooleanProperty(true);
@@ -141,14 +141,17 @@ public class Main extends Application {
             User user = new User(emailInput.getText(), fieldPhoneNumber.getText(), fieldPassword.getText(),
                     datePicker.getValue());
 
-            Validation validation = Validation.getInstance();
-            Set<ConstraintViolation> violations = validation.validate(user).getViolations();
             String notifyEmail = "";
             String notifyPhone = "";
             String notifyPassword = "";
             String notifyDateOfBirth = "";
 
-            for (ConstraintViolation violation : violations) {
+            Validation validation = Validation.getInstance();
+            IIterator violations = validation.validate(user).createIterable();
+
+            while (violations.hasMore()) {
+                ConstraintViolation violation = (ConstraintViolation) violations.getNext();
+
                 switch (violation.getProperty()) {
                     case "email":
                         notifyEmail += violation.getMessage() + "! ";
@@ -162,6 +165,7 @@ public class Main extends Application {
                     case "dob":
                         notifyDateOfBirth += violation.getMessage() + "! ";
                         break;
+                    // Add more cases as needed
                 }
             }
 
